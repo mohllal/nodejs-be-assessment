@@ -1,25 +1,31 @@
+const path = require('path');
+const fs = require('fs');
+
 module.exports = class InitControllers {
-    /**
-     * Register all Controllers to the server Object
-     * @param {Object} server 
-     */
-    init(server) {
-        var controllerPath = require("path").join(__dirname, "/controllers");
-        var _HomepageController;
+  /**
+   * Register all Controllers to the server Object
+   * @param {Object} server
+   */
+  // eslint
+  init(server) {
+    const controllerPath = path.join(__dirname, '/controllers');
+    let HomepageController;
 
-        require("fs").readdirSync(controllerPath).forEach(function(file) {
-            if ("BaseController.js" !== file && "HomeController.js" !== file) {
-                let Controller = require("./controllers/" + file);
-                (new Controller(server)).init();
-            } else if ("HomeController.js" === file) {
-                _HomepageController = require("./controllers/" + file);
-            }
-        });
+    fs.readdirSync(controllerPath).forEach((file) => {
+      if (file !== 'BaseController.js' && file !== 'HomeController.js') {
+        // eslint-disable-next-line import/no-dynamic-require, global-require
+        const Controller = require(`./controllers/${file}`);
+        new Controller(server).init();
+      } else if (file === 'HomeController.js') {
+        // eslint-disable-next-line import/no-dynamic-require, global-require
+        HomepageController = require(`./controllers/${file}`);
+      }
+    });
 
-        if (_HomepageController) {
-            (new _HomepageController(server)).init();
-        }
-        
-        return server;
+    if (HomepageController) {
+      new HomepageController(server).init();
     }
-}
+
+    return server;
+  }
+};
