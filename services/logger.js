@@ -8,14 +8,16 @@ const appInfo = require('../package');
 const appLabel = `${appInfo.name}/${appInfo.version}`;
 
 const myFormat = printf((info) => {
+  let message;
   try {
     if (typeof info.message === 'object') {
       info.message = JSON.stringify(info.message);
     }
+    message = `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`;
   } catch (err) {
-    // code for handling the error
+    message = `Failed to parse message of type ${typeof info.message}`;
   }
-  return `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`;
+  return message;
 });
 
 const logger = createLogger({

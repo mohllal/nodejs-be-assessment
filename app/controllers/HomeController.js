@@ -27,8 +27,7 @@ module.exports = class HomeController extends BaseController {
    * @apiGroup Health Check
    * @ApiDescription Root request to check if service is responding
    * @apiUse HealthResponse100
-   */
-  /**
+   * ***************************************************************
    * @api {get} /api/v1/ Health Check v1
    * @apiVersion 1.0.0
    * @apiName Index V1
