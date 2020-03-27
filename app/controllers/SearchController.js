@@ -33,8 +33,9 @@ module.exports = class SearchController extends BaseController {
    */
   async searchAction(req, res) {
     try {
-      const result = await this.SearchService.search(req.query.q);
-      res.status(200).json(super.sendResponse('SUCCESS', result));
+      const { error, result } = await this.SearchService.search(req.query);
+      if (error) res.status(400).json(super.sendResponse('BAD_REQUEST', error.message));
+      else res.status(200).json(super.sendResponse('SUCCESS', result));
     } catch (e) {
       res.status(500).json(super.sendResponse('BACKEND_ERROR', e.message));
     }
