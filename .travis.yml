@@ -1,0 +1,26 @@
+language: minimal
+
+services: docker
+
+stages:
+  - build
+  - test
+
+before_install:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - echo 'dockerhub credentials configured'
+  - export TRAVIS_TAG="release-$(git rev-parse --short ${TRAVIS_COMMIT})"
+jobs:
+  include:
+    - stage: build
+      script:
+      - echo 'build and push docker images ..'
+      - docker build -t searchservice .
+      - docker tag searchservice $DOCKER_USERNAME/searchservice:$TRAVIS_TAG
+      - docker tag searchservice $DOCKER_USERNAME/searchservice:latest
+      - docker push $DOCKER_USERNAME/searchservice:$TRAVIS_TAG
+      - docker push $DOCKER_USERNAME/searchservice:latest
+    - stage: test
+      script:
+      - echo 'run unit tests ..'
+      - npm run test
