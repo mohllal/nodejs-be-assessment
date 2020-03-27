@@ -42,6 +42,6 @@ module.exports = class SearchService {
         .optional(),
     });
 
-    return schema.validate(query, {allowUnknown: false});
+    return schema.validate(query, { allowUnknown: false });
   }
 };

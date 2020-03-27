@@ -11,8 +11,9 @@ module.exports = class InitControllers {
     const controllerPath = path.join(__dirname, '/controllers');
     let HomepageController;
 
+    const match = new RegExp(/\.test.js/g);
     fs.readdirSync(controllerPath).forEach((file) => {
-      if (file !== 'BaseController.js' && file !== 'HomeController.js') {
+      if (file !== 'BaseController.js' && file !== 'HomeController.js' && !match.test(file)) {
         // eslint-disable-next-line import/no-dynamic-require, global-require
         const Controller = require(`./controllers/${file}`);
         new Controller(server).init();
