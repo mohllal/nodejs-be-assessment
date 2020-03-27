@@ -5,6 +5,7 @@ const path = require('path');
 const config = require('./config/config.json');
 const InitControllers = require('./app/InitControllers');
 const logger = require('./services/logger');
+const cors = require('cors');
 
 const app = express();
 const server = http.createServer(app);
@@ -15,6 +16,7 @@ require('./middlewares')(app);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 

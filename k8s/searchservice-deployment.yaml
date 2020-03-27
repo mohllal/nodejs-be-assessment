@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: searchservice
+  name: searchservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: searchservice
+  template:
+    metadata:
+      labels:
+        service: searchservice
+    spec:
+      containers:
+      - image: docker.io/mohllal/searchservice
+        name: searchservice
+        imagePullPolicy: Always  
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"
+      restartPolicy: Always
