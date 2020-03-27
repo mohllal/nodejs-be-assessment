@@ -1,6 +1,6 @@
 # version of node to use
 FROM node:12
-LABEL maintainer="kareem.mohllal@bosta.co"
+LABEL maintainer="kareem.mohllal@gmail.com"
 
 # make dir for the application build output
 RUN mkdir -p /usr/src/
