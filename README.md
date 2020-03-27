@@ -1,4 +1,6 @@
-# Search Service
+# Search Service 
+
+[![Build Status](https://travis-ci.com/mohllal/nodejs-be-assessment.svg?branch=master)](https://travis-ci.com/mohllal/nodejs-be-assessment)
 
 Hello, I'm a micro-service in Node.js. I'm able to look into Goodreads and fetch books.
 But I feel a bit limited. Can you help me to improve my skills?
@@ -36,6 +38,11 @@ You can call this endpoint: ```/api/v1/search?q=book-name``` to fetch books in a
 - Copy the `/config/config.dist.json` to `/config/config.json` and set your own properties (default may be fine).
 - Run **npm run dev** to start me with `nodemon`.
 - Go to the browser and type [http://localhost:8088/](http://localhost:8088/) to see the application running.
+
+## Testing and lint
+
+- You can run unit tests via `npm run test`.
+- You can run linter via `npm run lint`.
 
 ## Objectives
 
