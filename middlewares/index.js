@@ -18,7 +18,7 @@ module.exports = (app) => {
         {
           skip(req) {
             // Ignore healthcheck so it doesn't flood logger
-            return req.originalUrl === '/';
+            return req.originalUrl === '/api/v1/';
           },
         },
       ),
