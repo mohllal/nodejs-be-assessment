@@ -12,29 +12,31 @@
 
     console.log(`http://localhost:8088/api/v1/search?q=${query}&field=${searchType}&sortBy=${sortType}&page=1`);
 
-    $.ajax({
-      url: `http://localhost:8088/api/v1/search?q=${query}&field=${searchType}&sortBy=${sortType}&page=1`,
-      type: 'GET',
-      success(result) {
-        console.log('Response:', result);
-        $gallery.empty();
+    if (query) {
+      $.ajax({
+        url: `http://localhost:8088/api/v1/search?q=${query}&field=${searchType}&sortBy=${sortType}&page=1`,
+        type: 'GET',
+        success(result) {
+          console.log('Response:', result);
+          $gallery.empty();
 
-        const books = result.response.results.work;
-        books.forEach((book) => {
-          const content = `
-          <div class="book">
-           <img src=${book.best_book.image_url} alt=${book.best_book.title}>
-           <div>${book.best_book.title}</div>
-          </div>
-          `;
-          $gallery.append(content);
-        });
-      },
-      error(error) {
-        console.error('Error:', error);
-        alert(error.responseJSON.response);
-      },
-    });
+          const books = result.response.results.work;
+          books.forEach((book) => {
+            const content = `
+            <div class="book">
+             <img src=${book.best_book.image_url} alt=${book.best_book.title}>
+             <div>${book.best_book.title}</div>
+            </div>
+            `;
+            $gallery.append(content);
+          });
+        },
+        error(error) {
+          console.error('Error:', error);
+          alert(error.responseJSON.response);
+        },
+      });
+    }
   }
 
   $searchText.on('keyup', filterResults); // Use keyup event to call filterResults()
