@@ -2,6 +2,7 @@ const fetch = require('node-fetch');
 const parser = require('xml2json');
 const joi = require('@hapi/joi');
 const config = require('../../config/config');
+const SortService = require('./SortService');
 
 module.exports = class SearchService {
   constructor(configs) {
@@ -10,11 +11,12 @@ module.exports = class SearchService {
 
   search(query) {
     return new Promise((resolve, reject) => {
-      const { error } = this.validate(query);
+      const { error, value } = this.validate(query);
+      console.log(value)
       if (error) resolve({ error });
 
       fetch(
-        `${config.goodreads.base_url + config.goodreads.search_resource + query.q}&key=bZFY4Rc5TZpBEc89fv7XKA`,
+        `${config.goodreads.base_url + config.goodreads.search_resource}?q=${value.q}&key=bZFY4Rc5TZpBEc89fv7XKA&page=${value.page}&field=${value.field}`,
         {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
@@ -23,6 +25,9 @@ module.exports = class SearchService {
         .then((res) => res.text())
         .then((xml) => {
           const json = JSON.parse(parser.toJson(xml));
+          SortService.sortBooks(
+            json.GoodreadsResponse.search.results.work, value.sortBy
+          );
           return resolve({ result: json.GoodreadsResponse.search });
         })
         .catch((e) => reject(e));
@@ -35,10 +40,17 @@ module.exports = class SearchService {
       page: joi
         .number()
         .min(1)
+        .default(1)
         .optional(),
       field: joi
         .string()
         .valid('title', 'author', 'all')
+        .default('all')
+        .optional(),
+      sortBy: joi
+        .string()
+        .valid('average_rating', 'ratings_count', 'publication_date', 'none')
+        .default('none')
         .optional(),
     });
 

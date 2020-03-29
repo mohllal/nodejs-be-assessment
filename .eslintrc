@@ -15,7 +15,8 @@
         "no-useless-constructor": "off",
         "class-methods-use-this": "off",
         "no-param-reassign": "off",
-        "no-alert": "off"
+        "no-alert": "off",
+        "no-underscore-dangle": "off"
     },
     "plugins": [
         "mocha"
