@@ -1,11 +1,21 @@
 <div id="search-container">
-    <input type="text" placeholder="Filter by search" id="search" />
+    <input type="text" placeholder="Filter by search" id="search-text" />
     {{!-- <label for="type">Choose a car:</label> --}}
     
-    <select id="type">
+    <select id="search-type">
         <option value="all">All</option>
         <option value="author">Author</option>
         <option value="title">Title</option>
+    </select>
+</div>
+
+<div id="sort-container">
+    <label for="sort-type">Sort By:</label>
+    <select id="sort-type">
+        <option value="none">None</option>
+        <option value="average_rating">Average Rating</option>
+        <option value="ratings_count">Rating Count</option>
+        <option value="publication_date">Publication Date</option>
     </select>
 </div>
 
